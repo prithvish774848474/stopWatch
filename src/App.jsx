@@ -18,7 +18,7 @@ export default function App() {
           if (second < 59)
             return (second + 1);
           else {
-            setMinutes(minutes + 1);
+            setMinutes(minute => minute + 1);
             return 0;
           }
         }), 1000);
