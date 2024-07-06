@@ -26,6 +26,10 @@ export default function App() {
         <kbd className="timeDesignation">m</kbd> :{" "}
         {Math.floor(time % 60).toString().padStart(2, "0")}
         <kbd className="timeDesignation">s</kbd>
+        {/* time % 60 gives seconds
+        (time / 60) % 60 gives minutes
+        ((time / 60) / 60) % 60 gives hours
+        number % 60 is in the range [0, 59] */}
       </span>
       <button
         type="button"
