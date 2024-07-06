@@ -1,45 +1,44 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import './App.css';
 
 export default function App() {
   const [isActive, setIsActive] = useState(false);
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  function handleReset() {
-    setSeconds(0);
-    setMinutes(0);
-    setIsActive(false);
-  }
+  const [time, setTime] = useState(0);
+
+  const timeID = useRef('');
   useEffect(() => {
-    let timeID;
-    switch (isActive) {
-      case true:
-        timeID = setInterval(() => setSeconds(second => {
-          if (second < 59)
-            return (second + 1);
-          else {
-            setMinutes(minute => minute + 1);
-            return 0;
-          }
-        }), 1000);
-        break;
-      case false:
-        clearInterval(timeID);
-        break;
-      default:
-        throw new Error("Invalid!");
-    }
-    return () => clearInterval(timeID);
+    if (isActive)
+      timeID.current = setInterval(() => setTime((t) => t + 1), 1000);
+    return () => clearInterval(timeID.current);
   }, [isActive]);
+
+  const handleReset = () => {
+    setTime(0);
+    setIsActive(false);
+  };
+
   return (
     <div className="stopWatchContainer">
       <span className="stopWatch">
-        {minutes.toString().padStart(2, '0')} : {seconds.toString().padStart(2, '0')}
+        {Math.floor(((time / 60) / 60) % 60).toString().padStart(2, '0')}
+        <kbd className="timeDesignation">h</kbd> : {" "}
+        {Math.floor((time / 60) % 60).toString().padStart(2, "0")}
+        <kbd className="timeDesignation">m</kbd> :{" "}
+        {Math.floor(time % 60).toString().padStart(2, "0")}
+        <kbd className="timeDesignation">s</kbd>
       </span>
-      <button type="button" className="controlButton start-stop" onClick={() => setIsActive(!isActive)}>
+      <button
+        type="button"
+        className="controlButton start-stop"
+        onClick={() => setIsActive(!isActive)}
+      >
         {isActive ? "Stop" : "Start"}
       </button>
-      <button type="button" className="controlButton reset" onClick={handleReset}>
+      <button
+        type="button"
+        className="controlButton reset"
+        onClick={handleReset}
+      >
         Reset
       </button>
     </div>
