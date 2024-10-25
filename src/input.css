@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.custom-container-box-shadow {
+    box-shadow: 0 0 0.5rem #a7f3d0, 0 0 1rem #34d399;
+}
+
+.custom-stopwatch-box-shadow {
+    box-shadow: 0 0 0.25rem #bae6fd, 0 0 0.75rem #38bdf8;
+}
+
+.custom-control-button-transition {
+    transition: border-color 1000ms ease, border-bottom-color 1000ms ease;
+}
